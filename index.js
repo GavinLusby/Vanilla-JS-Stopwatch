@@ -11,7 +11,6 @@ let stopTime; // Measures urrent time since epoch(in ms) while clock is running,
 let stopQueued = false;
 let splitQueued = false;
 let Interval;
-let speedFactor = 1;
 let buttonStartStop = document.getElementById("start-stop-button");
 let buttonResetSplit = document.getElementById("reset-split-button");
 let timerText = document.getElementById("timer");
@@ -56,14 +55,19 @@ buttonResetSplit.onclick = () => {
         splitBox.appendChild(newSplit);
     } else {
         timeCount = 0;
+        startTime = undefined;
+        stopTime = undefined;
         timerText.textContent = updateTime(true);
+        while(splitBox.firstChild){
+            splitBox.removeChild(splitBox.firstChild);
+        }
 
     }
 }
 
 
 function countTimer() {
-    stopTime = Date.now()*speedFactor;
+    stopTime = Date.now();
     let timeInMillisecond = stopTime + timeCount - startTime
     let timeInSeconds = Math.floor(timeInMillisecond/1000);
     let timeInMinutes = Math.floor(timeInSeconds/60);
